@@ -6,8 +6,9 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '7e51b296c2c941d9a3d5e99cec1550710c51bb922804ecb729f4b834eeacbaf9cb6a6a1b41124aff9ec1ddb3553f6ff612575116f077f9b11b21a9c235033a08'
-
+  # config.secret_key = 'fdad0d592bd132892fd3e9e9cae05cb75a2e9e2258d0ecd701f69651e4a322521964f35b350745fc573e18c45723e151ff06b06d6d6ee5093f69551f7b0fd2bf'
+  config.omniauth :facebook,  Rails.application.secrets.facebook_app_id,
+                              Rails.application.secrets.facebook_app_secret
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -99,7 +100,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = '3628eff6e6cd90e393c297f1a4f6d70975f4439c731394209eb71a1e7b403717c120a577859ab5eb883fcd21efb98bc6f5280d719cf93bce4e64b7fbf985954c'
+  # config.pepper = '20454c3ec8c9e22083a6c92d761011525cc34a46604c249db312a7b09ca5bddea39a0d34ee03ab351dd5b118f688c493dfe73b2d6785fa8859720fd65fb91fc3'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
