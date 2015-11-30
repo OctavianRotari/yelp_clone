@@ -8,19 +8,17 @@ feature "User can sign in and out" do
       expect(page).to have_link('Sign up')
     end
 
+    it "should not see add a restaurant if the user isn't signed in" do
+      visit '/'
+      expect(page).not_to have_link 'Add a restaurant'
+    end
+
     it "should not see 'sign out' link" do
       visit('/')
       expect(page).not_to have_link('Sign out')
     end
   end
 
-  context 'user sign in with facebook' do
-    it 'should see sign out link' do
-      visit '/'
-      click_link 'Sign in with Facebook'
-      expect(page).to have_content 'sign out'
-    end
-  end
 
   context "user signed in on the homepage" do
     before do
@@ -43,4 +41,33 @@ feature "User can sign in and out" do
       expect(page).not_to have_link('Sign up')
     end
   end
+
+  context "user cannot " do
+    before do
+      visit('/')
+      click_link('Sign up')
+      fill_in('Email', with: 'test@example.com')
+      fill_in('Password', with: 'testtest')
+      fill_in('Password confirmation', with: 'testtest')
+      click_button('Sign up')
+      click_link "Add a restaurant"
+      fill_in "Name", with: "Da Gigi"
+      click_button "Create Restaurant"
+      click_link "Sign out"
+      click_link('Sign up')
+      fill_in('Email', with: 'test1@example.com')
+      fill_in('Password', with: 'testtest')
+      fill_in('Password confirmation', with: 'testtest')
+      click_button('Sign up')
+    end
+
+    it "delete a restaurant which they have not created" do
+      expect(page).not_to have_content "Delete Da Gigi"
+    end
+
+    it "edit a restaurant which they have not created" do
+      expect(page).not_to have_content "Edit Da Gigi"
+    end
+  end
+
 end

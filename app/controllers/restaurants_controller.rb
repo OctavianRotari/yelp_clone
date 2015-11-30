@@ -1,5 +1,11 @@
 class RestaurantsController < ApplicationController
+
+  before_action :authenticate_user!, :except => [:index, :show]
+
   def index
+    if current_user != nil
+      @current_user_id = current_user.id
+    end
     @restaurants = Restaurant.all
   end
   def new
@@ -7,6 +13,7 @@ class RestaurantsController < ApplicationController
   end
   def create
     @restaurant =  Restaurant.new(restaurant_params)
+    @restaurant.user_id = current_user.id
     if @restaurant.save
       redirect_to '/restaurants'
     else

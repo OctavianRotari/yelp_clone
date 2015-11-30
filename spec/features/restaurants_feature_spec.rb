@@ -1,8 +1,10 @@
 require 'rails_helper'
+require_relative './../helpers/user_helper_spec.rb'
 
 feature 'restaurants' do
   context 'no restaurants have been added' do
     scenario 'should display a prompt to add a restaurant' do
+      sign_up
       visit '/restaurants'
       expect(page).to have_content 'No restaurants yet'
       expect(page).to have_link 'Add a restaurant'
@@ -23,6 +25,7 @@ feature 'restaurants' do
 
   context 'creating restaurants' do
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
+      sign_up
       visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
@@ -33,6 +36,7 @@ feature 'restaurants' do
 
     context 'an invalid restaurant' do
       it 'does not let you submit a name that is too short' do
+        sign_up
         visit '/restaurants'
         click_link 'Add a restaurant'
         fill_in 'Name', with: 'kf'
@@ -47,6 +51,7 @@ feature 'restaurants' do
     let!(:kfc){Restaurant.create(name:'KFC')}
 
     scenario 'lets a user view a restaurant' do
+      sign_up
       visit '/restaurants'
       click_link 'KFC'
       expect(page).to have_content 'KFC'
@@ -54,7 +59,12 @@ feature 'restaurants' do
     end
   end
   context 'editing restaurants' do
-    before { Restaurant.create name: 'KFC' }
+    before do
+      sign_up
+      click_link "Add a restaurant"
+      fill_in "Name", with: "KFC"
+      click_button "Create Restaurant"
+    end
 
     scenario 'let a user edit a restaurant' do
       visit '/restaurants'
@@ -67,7 +77,13 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    before {Restaurant.create name:'KFC'}
+    before do
+      sign_up
+      click_link "Add a restaurant"
+      fill_in "Name", with: "KFC"
+      click_button "Create Restaurant"
+    end
+
 
     scenario 'removes a restaurant when a user clicks a delete link' do
       visit '/restaurants'

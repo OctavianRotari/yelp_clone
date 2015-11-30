@@ -2,8 +2,10 @@
   <% @restaurants.each do |restaurant|%>
     <h2><%= restaurant.name %></h2>
     <%= link_to restaurant.name, restaurant_path(restaurant) %>
-    <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %>
-    <%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %>
+    <% if restaurant.user_id == @current_user_id %>
+      <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %>
+      <%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %>
+    <% end %>
     <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
     <h3> Reviews for <%= restaurant.name %></h3>
     <% if restaurant.reviews.any? %>
@@ -21,4 +23,6 @@
 <%else%>
     <h1>No restaurants yet</h1>
 <% end %>
-<a href='/restaurants/new'>Add a restaurant</a>
+<% if @current_user_id != nil %>
+  <a href='/restaurants/new'>Add a restaurant</a>
+<% end %>
