@@ -68,6 +68,7 @@ feature "User can sign in and out" do
     it "edit a restaurant which they have not created" do
       expect(page).not_to have_content "Edit Da Gigi"
     end
+
   end
 
 end
