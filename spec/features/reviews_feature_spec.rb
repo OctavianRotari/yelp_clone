@@ -17,16 +17,23 @@ feature 'reviewing' do
   end
 
   def leave_review(thoughts, rating)
+    sign_up
     visit '/restaurants'
     click_link 'Review KFC'
     fill_in 'Thoughts', with: thoughts
-    select rating, form: 'Rating'
+    select rating, from: 'Rating'
     click_button 'Leave Review'
   end
 
   scenario 'displays an averahe rating for all reviews' do
     leave_review('So so', '3')
-    leave_review('Great', '5')
-    expect(page).to have_content('Average rating: 4')
+    click_link 'Sign out'
+    sign_up_2
+    visit '/restaurants'
+    click_link 'Review KFC'
+    fill_in 'Thoughts', with: 'great'
+    select 5, from: 'Rating'
+    click_button 'Leave Review'
+    expect(page).to have_content('Average rating: ★★★★☆')
   end
 end
