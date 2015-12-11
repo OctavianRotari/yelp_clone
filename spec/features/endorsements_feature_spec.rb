@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative './../helpers/user_helper_spec.rb'
 
 feature 'endorsing review' do
   before do
@@ -6,9 +7,10 @@ feature 'endorsing review' do
     kfc.reviews.create(rating: 3, thoughts: 'It was an abomination')
   end
 
-  scenario 'a user can endorse a review, which updates the review endorsment count' do
-    visit 'restaurants'
-    click_link 'Endorse Review'
-    expect(page).to have_content('1 endorsment')
+  scenario 'a user can endorse a review, which updates the review endorsement count', js: true do
+    sign_up
+    visit '/restaurants'
+    click_link 'Endorse'
+    expect(page).to have_content('1 endorsement')
   end
 end

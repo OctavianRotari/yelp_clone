@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :restaurants, shallow: true do
     resources :reviews do
-      resources :endorsment
+      resources :endorsements
     end
   end
 

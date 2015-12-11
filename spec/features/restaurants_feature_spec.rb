@@ -1,6 +1,5 @@
 require 'rails_helper'
 require_relative './../helpers/user_helper_spec.rb'
-
 feature 'restaurants' do
   context 'no restaurants have been added' do
     scenario 'should display a prompt to add a restaurant' do

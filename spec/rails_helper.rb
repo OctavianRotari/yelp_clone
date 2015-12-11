@@ -6,6 +6,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'capybara/rails'
 require 'rspec/rails'
+
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 require 'support/database_cleaner'

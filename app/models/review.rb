@@ -3,6 +3,6 @@ class Review < ActiveRecord::Base
   validates :rating, inclusion: (1..5)
   belongs_to :user
   validates :user, uniqueness: { scope: :restaurant, message: "has reviewed this restaurant already"}
-  has_many :endorsements
+  has_many :endorsements, dependent: :destroy
 end
 
