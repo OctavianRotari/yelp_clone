@@ -1,8 +1,14 @@
 rvm: '2.2.3'
 
-script: bundle exec rspec spec
-
-script:
-  - bundle exec bin/rake db:create
-  - bundle exec bin/rake db:migrate
-  - bundle exec rspec spec
+env:
+  - DB=sqlite
+  - DB=mysql
+  - DB=postgresql
+script: 
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec spec/
+before_script:
+  - mysql -e 'create database yelp_clone_test'
+  - psql -c 'create database yelp_clone_test' -U postgres
+bundler_args: --binstubs=./bundler_stubs
