@@ -1,8 +1,10 @@
 class ReviewsController < ApplicationController
+
   def new
     @restaurant = Restaurant.find(params[:restaurant_id])
     @review = Review.new
   end
+
   def create
    @restaurant = Restaurant.find(params[:restaurant_id])
    @review = @restaurant.reviews.build_with_user(review_params, current_user)
@@ -16,6 +18,7 @@ class ReviewsController < ApplicationController
      end
    end
   end
+
   def destroy
     @review = Review.find(params[:id])
     unless current_user == nil
@@ -30,6 +33,7 @@ class ReviewsController < ApplicationController
     end
     redirect_to '/restaurants'
   end
+
   def review_params
     params.require(:review).permit(:thoughts, :rating)
   end
